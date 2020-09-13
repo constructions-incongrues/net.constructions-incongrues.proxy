@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  traefik:
+    command:
+    - --api=true
+    - --api.dashboard=true
+    - --providers.docker=true
+    - --providers.docker.exposedbydefault=false
+    - --entrypoints.web.address=:80
+    image: traefik:v2.2.11
+    labels:
+    - traefik.enable=true
+    - traefik.port=8080
+    - traefik.http.routers.traefik.rule=Host(`traefik.localhost`)
+    - traefik.http.routers.traefik.service=api@internal
+    ports:
+    - 80:80
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+
+networks:
+  default:
+    external:
+      name: traefik
