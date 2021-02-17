@@ -6,38 +6,22 @@ services:
       - --api.dashboard=true
       - --api=true
       - --entrypoints.http.address=:80
-      - --log.level=INFO
+      - --log.level=${LOGLEVEL-INFO}
       - --providers.docker.exposedbydefault=false
       - --providers.docker=true
-    env_file: .env
     image: traefik:v2.4.3
     labels:
       - traefik.enable=true
       - traefik.http.routers.traefik.entrypoints=http
-      - traefik.http.routers.traefik.rule=Host(`proxy.${DOMAIN-localhost}`) && PathPrefix(`/traefik`)
+      - traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN-localhost}`)
       - traefik.http.routers.traefik.service=api@internal
       - traefik.port=8080
     ports:
-    - ${TRAEFIK_HOST_PORT_HTTP-8080}:80
+    - ${EXPOSE-8080}:80
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-
-  portainer:
-    image: portainer/portainer-ce:2.1.1-alpine
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.portainer.rule=Host(`proxy.${DOMAIN-localhost}`) && PathPrefix(`/portainer`)"
-      - "traefik.http.routers.portainer.entrypoints=http"
-      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
-    restart: always
-    volumes:
-      - portainer:/data
-      - /var/run/docker.sock:/var/run/docker.sock
 
 networks:
   default:
     external:
       name: traefik
-
-volumes:
-  portainer:
