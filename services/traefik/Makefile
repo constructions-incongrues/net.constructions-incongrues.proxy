@@ -23,7 +23,7 @@ help: ## Affichage de ce message d'aide
 
 clean: stop
 	docker-compose rm -f
-	docker network rm -f netconstructions-incongruesproxy_traefik
+	docker network rm netconstructions-incongruesproxy_traefik
 
 start: ## Démarrage
 	-$(MAKE) network
