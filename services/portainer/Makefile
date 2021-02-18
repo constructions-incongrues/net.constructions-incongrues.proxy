@@ -1,4 +1,4 @@
-#!make
+#!/usr/bin/env make
 
 # Import de la configuration environnementale
 include .env

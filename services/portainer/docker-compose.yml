@@ -5,7 +5,7 @@ networks:
     internal: true
   traefik:
     external:
-      name: traefik
+      name: netconstructions-incongruesproxy_traefik
 
 services:
   portainer:

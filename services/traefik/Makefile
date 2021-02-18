@@ -1,4 +1,4 @@
-#!make
+#!/usr/bin/env make
 
 # Import de la configuration environnementale
 include .env
@@ -23,6 +23,7 @@ help: ## Affichage de ce message d'aide
 
 clean: stop
 	docker-compose rm -f
+	docker network rm -f netconstructions-incongruesproxy_traefik
 
 start: ## Démarrage
 	-$(MAKE) network
@@ -43,4 +44,4 @@ network:
 		--driver=bridge \
 		--attachable \
 		--internal=false \
-	traefik
+	netconstructions-incongruesproxy_traefik

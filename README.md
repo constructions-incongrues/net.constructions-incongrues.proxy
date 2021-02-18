@@ -44,7 +44,7 @@ networks:
     internal: true
   traefik:
     external:
-      name: traefik
+      name: netconstructions-incongruesproxy_traefik
 ```
 
 - Associer les services qui doivent être accessible publiquement au réseau `traefik` :
