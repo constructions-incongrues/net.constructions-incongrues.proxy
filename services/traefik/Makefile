@@ -23,12 +23,12 @@ help: ## Affichage de ce message d'aide
 
 ## Contrôle des conteneurs
 
-clean: stop
+clean: stop ## Suppresssion des conteneurs
 	docker-compose -p $${COMPOSE_PROJECT_NAME}-$${SERVICE} rm -f
 
-start: ## Démarrage
+start: ## Démarrage du service
 	docker-compose -p $${COMPOSE_PROJECT_NAME}-$${SERVICE} up --remove-orphans -d
 
-stop: ## Arrêt
+stop: ## Arrêt arrêt du service
 	docker-compose -p $${COMPOSE_PROJECT_NAME}-$${SERVICE} stop
 
