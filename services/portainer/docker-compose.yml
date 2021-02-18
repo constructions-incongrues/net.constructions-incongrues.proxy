@@ -14,9 +14,9 @@ services:
     labels:
       - traefik.docker.network=netconstructions-incongruesproxy_traefik
       - traefik.enable=true
-      - traefik.http.routers.${SUBDOMAIN-portainer}.entrypoints=http
-      - traefik.http.routers.${SUBDOMAIN-portainer}.rule=Host(`${SUBDOMAIN-portainer}.${DOMAIN-localhost}`)
-      - traefik.http.services.${SUBDOMAIN-portainer}.loadbalancer.server.port=9000
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${SUBDOMAIN-portainer}.entrypoints=http
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${SUBDOMAIN-portainer}.rule=Host(`${SUBDOMAIN-portainer}.${DOMAIN-localhost}`)
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-${SUBDOMAIN-portainer}.loadbalancer.server.port=9000
     networks:
       - default
       - traefik
