@@ -5,7 +5,7 @@
 ## Misc
 
 help: ## Affichage de ce message d'aide
-	@printf "\033[36m%s\033[0m (v%s)\n\n" $$(basename $$(pwd)) $$(git describe --tags --always)
+	@printf "\033[36m%s\033[0m \n\n" $$(basename $$(pwd))
 	@echo "Commandes\n"
 	@for MKFILE in $(MAKEFILE_LIST); do \
 		grep -E '^[a-zA-Z0-9\._-]+:.*?## .*$$' $$MKFILE | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m  %-30s\033[0m  %s\n", $$1, $$2}'; \
@@ -40,3 +40,8 @@ traefik-stop:
 
 traefik-clean:
 	$(MAKE) -C services/traefik clean
+
+## Helpers
+
+ssh: ## Connexion au serveur de production
+	ssh -A debian@152.228.130.67
