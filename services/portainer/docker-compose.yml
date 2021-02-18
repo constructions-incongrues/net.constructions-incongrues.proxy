@@ -1,0 +1,25 @@
+version: '2.4'
+
+networks:
+  default:
+    internal: true
+  traefik:
+    external:
+      name: traefik
+
+services:
+  portainer:
+    env_file: .env
+    image: portainer/portainer-ce:2.1.1-alpine
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.portainer.rule=Host(`${SUBDOMAIN}.${DOMAIN-localhost}`)
+      - traefik.http.routers.portainer.entrypoints=http
+      - traefik.http.services.portainer.loadbalancer.server.port=9000
+    restart: always
+    volumes:
+      - portainer:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  portainer:
