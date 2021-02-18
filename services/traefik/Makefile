@@ -25,10 +25,8 @@ help: ## Affichage de ce message d'aide
 
 clean: stop
 	docker-compose rm -f
-	docker network rm netconstructions-incongruesproxy_traefik
 
 start: ## Démarrage
-	-$(MAKE) network
 	docker-compose up --remove-orphans -d
 
 stop: ## Arrêt
