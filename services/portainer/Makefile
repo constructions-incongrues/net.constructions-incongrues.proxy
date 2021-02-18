@@ -24,10 +24,10 @@ help: ## Affichage de ce message d'aide
 ## Contrôle des conteneurs
 
 clean: stop # Arrêt et suppression des conteneurs
-	docker-compose -p $${COMPOSE_PROJECT_NAME} rm -f
+	docker-compose -p $${COMPOSE_PROJECT_NAME}-$${SERVICE} rm -f
 
 start: ## Démarrage
-	docker-compose -p $${COMPOSE_PROJECT_NAME} up --remove-orphans -d
+	docker-compose -p $${COMPOSE_PROJECT_NAME}-$${SERVICE} up --remove-orphans -d
 
 stop: ## Arrêt
-	docker-compose -p $${COMPOSE_PROJECT_NAME} stop
+	docker-compose -p $${COMPOSE_PROJECT_NAME}-$${SERVICE} stop
