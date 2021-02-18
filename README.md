@@ -13,6 +13,7 @@ git clone git@github.com:constructions-incongrues/net.pastis-hosting.docker.git
 ## Services
 
 - portainer
+- statping
 - traefik
 
 Chaque service est situé dans un sous-répertoire dédié du dossier services.
