@@ -12,14 +12,14 @@ services:
     depends_on:
       - postgres
     environment:
-      VIRTUAL_HOST: ${COMPONENT}.${DOMAIN}
       DB_CONN: postgres
-      DB_HOST: postgres
-      DB_USER: statping
-      DB_PASS: statping
       DB_DATABASE: statping
-      NAME: status.pastis-hosting.net
+      DB_HOST: postgres
+      DB_PASS: statping
+      DB_USER: statping
       DESCRIPTION: État des services hébergés par Pastis Hosting
+      NAME: status.pastis-hosting.net
+      VIRTUAL_HOST: ${COMPONENT}.${DOMAIN}
     image: statping/statping:v0.90.74
     labels:
       - traefik.docker.network=${COMPOSE_PROJECT_NAME}_public
