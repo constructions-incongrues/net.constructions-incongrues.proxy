@@ -12,11 +12,11 @@ services:
     env_file: .env
     image: portainer/portainer-ce:2.1.1-alpine
     labels:
-      - traefik.docker.network=traefik
+      - traefik.docker.network=netconstructions-incongruesproxy_traefik
       - traefik.enable=true
-      - traefik.http.routers.portainer.entrypoints=http
-      - traefik.http.routers.portainer.rule=Host(`${SUBDOMAIN}.${DOMAIN-localhost}`)
-      - traefik.http.services.portainer.loadbalancer.server.port=9000
+      - traefik.http.routers.${SUBDOMAIN-portainer}-${DOMAIN-localhost}.entrypoints=http
+      - traefik.http.routers.${SUBDOMAIN-portainer}-${DOMAIN-localhost}.rule=Host(`${SUBDOMAIN-portainer}.${DOMAIN-localhost}`)
+      - traefik.http.services.${SUBDOMAIN-portainer}-${DOMAIN-localhost}.loadbalancer.server.port=9000
     networks:
       - default
       - traefik
