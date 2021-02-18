@@ -1,6 +1,8 @@
 #!/usr/bin/env make
 
 # Import de la configuration environnementale
+include ../../.env
+export $(shell sed 's/=.*//' .env)
 include .env
 export $(shell sed 's/=.*//' .env)
 
@@ -17,7 +19,7 @@ help: ## Affichage de ce message d'aide
 	@echo ""
 	@echo "Services"
 	@echo
-	@echo "  \033[36mTraefik\033[0m : https://$$SUBDOMAIN.$$DOMAIN"
+	@echo "  \033[36mTraefik\033[0m : https://$$SERVICE.$$DOMAIN"
 
 ## Contrôle des conteneurs
 
@@ -32,11 +34,3 @@ start: ## Démarrage
 stop: ## Arrêt
 	docker-compose stop
 
-# Commandes privées
-
-network:
-	-docker network create \
-		--driver=bridge \
-		--attachable \
-		--internal=false \
-	$${COMPOSE_PROJECT_NAME}_traefik

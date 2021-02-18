@@ -12,42 +12,26 @@ git clone git@github.com:constructions-incongrues/net.constructions-incongrues.p
 
 ## Services
 
+- portainer
+- traefik
+
 Chaque service est situé dans un sous-répertoire dédié du dossier services.
 
-### portainer
-
-#### Démarrage
-
-```sh
-make start
-```
-
-Une fois démarré, Portainer est accessible à l'adresse <http://portainer.proxy.localhost>.
-
-### traefik
-
-#### Démarrage
-
-```sh
-make start
-```
-
-Une fois démarré, le dashboard et l'API de Traefik sont accessibles à l'adresse <http://traefik.proxy.localhost>.
 
 ### Configuration d'un projet
 
-- Rajouter la définition de networks suivante au fichier `docker-compose.yml` du projet :
+- Rajouter la définition de réseaux suivante au fichier `docker-compose.yml` du projet :
 
 ```yaml
 networks:
   default:
     internal: true
-  traefik:
+  proxy:
     external:
-      name: ${COMPOSE_PROJECT_NAME}_traefik
+      name: ${COMPOSE_PROJECT_NAME}_proxy
 ```
 
-- Associer les services qui doivent être accessible publiquement au réseau `traefik` :
+- Associer les services qui doivent être accessible publiquement au réseau partagé :
 
 ```yaml
 services:
@@ -56,7 +40,7 @@ services:
     image: nginx
     labels:
       - traefik.enable=true
-      - traefik.docker.network=${COMPOSE_PROJECT_NAME}_traefik
+      - traefik.docker.network=${COMPOSE_PROJECT_NAME}_proxy
     networks:
       - default
       - traefik

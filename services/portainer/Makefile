@@ -1,6 +1,8 @@
 #!/usr/bin/env make
 
 # Import de la configuration environnementale
+include ../../.env
+export $(shell sed 's/=.*//' .env)
 include .env
 export $(shell sed 's/=.*//' .env)
 
@@ -17,9 +19,9 @@ help: ## Affichage de ce message d'aide
 	@echo ""
 	@echo "Services"
 	@echo
-	@echo "  \033[36mPortainer\033[0m : http://$$SUBDOMAIN.$$DOMAIN"
+	@echo "  \033[36mPortainer\033[0m : http://$$SERVICE.$$DOMAIN"
 
-## Contrôle local des conteneurs
+## Contrôle des conteneurs
 
 clean: stop # Arrêt et suppression des conteneurs
 	docker-compose rm -f

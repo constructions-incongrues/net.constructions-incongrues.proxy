@@ -1,5 +1,9 @@
 #!/usr/bin/env make
 
+# Import de la configuration environnementale
+include .env
+export $(shell sed 's/=.*//' .env)
+
 # Commandes publiques
 
 ## Misc
@@ -22,7 +26,7 @@ stop: portainer-stop traefik-stop ## Arrêt des services
 ## Services
 
 ### portainer
-portainer-start:
+portainer-start: network-create
 	$(MAKE) -C services/portainer start
 
 portainer-stop:
@@ -32,16 +36,29 @@ portainer-clean: portainer-stop
 	$(MAKE) -C services/portainer clean
 
 ### traefik
-traefik-start:
+traefik-start: network-create
 	$(MAKE) -C services/traefik start
 
 traefik-stop:
 	$(MAKE) -C services/traefik stop
 
-traefik-clean: traefik-stop
+traefik-clean: traefik-stop network-rm
 	$(MAKE) -C services/traefik clean
 
-## Helpers
+## Network
+
+network-create: ## Création du réseau partagé
+	-docker network create \
+		--driver=bridge \
+		--attachable \
+		--internal=false \
+	$${COMPOSE_PROJECT_NAME}_proxy
+
+network-rm: ## Suppression du réseau partagé
+	docker network rm $${COMPOSE_PROJECT_NAME}_proxy
+
+## Remote
 
 ssh: ## Connexion au serveur de production
 	ssh -A debian@152.228.130.67
+
