@@ -21,7 +21,7 @@ help: ## Affichage de ce message d'aide
 
 clean: stop ## tous les services : suppression des conteneurs
 
-start: traefiks portainers  ## tous les services : démarrage du service
+start: traefik portainers  ## tous les services : démarrage du service
 
 stop: portainer-stop traefik-stop ## tous les services : arrêt du service
 
