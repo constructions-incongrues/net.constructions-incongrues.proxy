@@ -15,7 +15,7 @@ help: ## Affichage de ce message d'aide
 
 clean: portainer-clean traefik-clean ## Arrêt et suppression des conteneurs
 
-start: portainer-start traefik-start ## Démarrage des services
+start: traefik-start portainer-start  ## Démarrage des services
 
 stop: portainer-stop traefik-stop ## Arrêt des services
 
