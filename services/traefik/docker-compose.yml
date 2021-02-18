@@ -1,5 +1,10 @@
 version: '2.4'
 
+networks:
+  default:
+    external:
+      name: traefik
+
 services:
   traefik:
     command:
@@ -21,8 +26,3 @@ services:
     - ${EXPOSE-8080}:80
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-
-networks:
-  default:
-    external:
-      name: traefik
