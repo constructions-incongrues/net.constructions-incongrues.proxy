@@ -1,9 +1,9 @@
 #!/usr/bin/env make
 
 # Import de la configuration environnementale
-include ../../.env
+-include ../../.env
 export $(shell sed 's/=.*//' .env)
-include .env
+-include .env
 export $(shell sed 's/=.*//' .env)
 
 # Commandes publiques
@@ -17,17 +17,17 @@ help: ## Affichage de ce message d'aide
 		grep -E '^[a-zA-Z0-9\._-]+:.*?## .*$$' $$MKFILE | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m  %-30s\033[0m  %s\n", $$1, $$2}'; \
 	done
 	@echo ""
-	@echo "Services"
+	@echo "Endpoints"
 	@echo
 	@echo "  \033[36mPortainer\033[0m : http://$$SERVICE.$$DOMAIN"
 
 ## Contrôle des conteneurs
 
 clean: stop # Arrêt et suppression des conteneurs
-	docker-compose rm -f
+	docker-compose -p $${COMPOSE_PROJECT_NAME} rm -f
 
 start: ## Démarrage
-	docker-compose up --remove-orphans -d
+	docker-compose -p $${COMPOSE_PROJECT_NAME} up --remove-orphans -d
 
 stop: ## Arrêt
-	docker-compose stop
+	docker-compose -p $${COMPOSE_PROJECT_NAME} stop
