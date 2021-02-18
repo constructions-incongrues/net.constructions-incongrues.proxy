@@ -26,9 +26,9 @@ Chaque service est situé dans un sous-répertoire dédié du dossier services.
 networks:
   default:
     internal: true
-  proxy:
+  public:
     external:
-      name: ${COMPOSE_PROJECT_NAME}_proxy
+      name: ${COMPOSE_PROJECT_NAME}_public
 ```
 
 - Associer les services qui doivent être accessible publiquement au réseau partagé :
@@ -40,7 +40,7 @@ services:
     image: nginx
     labels:
       - traefik.enable=true
-      - traefik.docker.network=${COMPOSE_PROJECT_NAME}_proxy
+      - traefik.docker.network=${COMPOSE_PROJECT_NAME}_public
     networks:
       - default
       - traefik

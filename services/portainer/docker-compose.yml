@@ -5,18 +5,18 @@ networks:
     internal: true
   proxy:
     external:
-      name: ${COMPOSE_PROJECT_NAME}_proxy
+      name: ${COMPOSE_PROJECT_NAME}_public
 
 services:
   portainer:
     env_file: .env
     image: portainer/portainer-ce:2.1.1-alpine
     labels:
-      - traefik.docker.network=${COMPOSE_PROJECT_NAME}_proxy
+      - traefik.docker.network=${COMPOSE_PROJECT_NAME}_public
       - traefik.enable=true
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${SUBDOMAIN-portainer}.entrypoints=http
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${SUBDOMAIN-portainer}.rule=Host(`${SUBDOMAIN-portainer}.${DOMAIN-localhost}`)
-      - traefik.http.services.${COMPOSE_PROJECT_NAME}-${SUBDOMAIN-portainer}.loadbalancer.server.port=9000
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${SERVICE-portainer}.entrypoints=http
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${SERVICE-portainer}.rule=Host(`${SERVICE-portainer}.${DOMAIN-localhost}`)
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-${SERVICE-portainer}.loadbalancer.server.port=9000
     networks:
       - default
       - proxy

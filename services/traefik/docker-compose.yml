@@ -3,7 +3,7 @@ version: '2.4'
 networks:
   default:
     external:
-      name: ${COMPOSE_PROJECT_NAME}_proxy
+      name: ${COMPOSE_PROJECT_NAME}_public
 
 services:
   traefik:

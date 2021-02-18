@@ -52,10 +52,10 @@ network:
 		--driver=bridge \
 		--attachable \
 		--internal=false \
-	$${COMPOSE_PROJECT_NAME}_proxy
+	$${COMPOSE_PROJECT_NAME}_public
 
 network-remove:
-	docker network rm $${COMPOSE_PROJECT_NAME}_proxy
+	docker network rm $${COMPOSE_PROJECT_NAME}_public
 
 ## Remote
 
