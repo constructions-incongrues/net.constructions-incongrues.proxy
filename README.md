@@ -44,7 +44,7 @@ services:
       - traefik.docker.network=${COMPOSE_PROJECT_NAME}_public
     networks:
       - default
-      - traefik
+      - public
 
   # Service privé
   redis:

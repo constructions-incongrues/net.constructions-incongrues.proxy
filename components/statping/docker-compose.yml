@@ -17,15 +17,19 @@ services:
       DB_HOST: postgres
       DB_PASS: statping
       DB_USER: statping
-      DESCRIPTION: État des services
-      NAME: Pastis Hosting
+      DESCRIPTION: ${STATPING_DESCRIPTION}
+      DISABLE_COLORS: "true"
+      LANGUAGE: ${STATPING_LANGUAGE}
+      NAME: ${STATPING_NAME}
+      SAMPLE_DATA: "false"
       VIRTUAL_HOST: ${COMPONENT}.${DOMAIN}
+
     image: statping/statping:v0.90.74
     labels:
       - traefik.docker.network=${COMPOSE_PROJECT_NAME}_public
       - traefik.enable=true
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${COMPONENT-status}.entrypoints=http
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${COMPONENT-status}.rule=Host(`${COMPONENT-status}.${DOMAIN-localhost}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${COMPONENT}.entrypoints=http
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${COMPONENT}.rule=Host(`${COMPONENT}.${DOMAIN}`)
     networks:
       - default
       - public

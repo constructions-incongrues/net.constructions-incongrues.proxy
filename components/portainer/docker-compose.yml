@@ -14,9 +14,9 @@ services:
     labels:
       - traefik.docker.network=${COMPOSE_PROJECT_NAME}_public
       - traefik.enable=true
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${COMPONENT-portainer}.entrypoints=http
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${COMPONENT-portainer}.rule=Host(`${COMPONENT-portainer}.${DOMAIN-localhost}`)
-      - traefik.http.services.${COMPOSE_PROJECT_NAME}-${COMPONENT-portainer}.loadbalancer.server.port=9000
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${COMPONENT}.entrypoints=http
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${COMPONENT}.rule=Host(`${COMPONENT}.${DOMAIN}`)
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-${COMPONENT}.loadbalancer.server.port=9000
     networks:
       - default
       - public
