@@ -17,8 +17,8 @@ services:
       DB_HOST: postgres
       DB_PASS: statping
       DB_USER: statping
-      DESCRIPTION: État des services hébergés par Pastis Hosting
-      NAME: status.pastis-hosting.net
+      DESCRIPTION: État des services
+      NAME: Pastis Hosting
       VIRTUAL_HOST: ${COMPONENT}.${DOMAIN}
     image: statping/statping:v0.90.74
     labels:
