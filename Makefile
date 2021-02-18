@@ -26,7 +26,7 @@ stop: portainer-stop traefik-stop ## tous les services : arrêt du service
 ## Services
 
 ### portainer
-portainer: ## portainer : démarrage du service
+portainer: portainer-start ## portainer : démarrage du service
 portainer-start: network
 	$(MAKE) -C services/portainer start
 
@@ -37,7 +37,7 @@ portainer-clean: portainer-stop ## portainer : suppression des conteneurs
 	$(MAKE) -C services/portainer clean
 
 ### traefik
-traefik: ## traefik : démarrage du service
+traefik: traefik-start ## traefik : démarrage du service
 traefik-start: network
 	$(MAKE) -C services/traefik start
 
