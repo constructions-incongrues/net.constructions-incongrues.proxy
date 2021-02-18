@@ -5,14 +5,14 @@ networks:
     internal: true
   traefik:
     external:
-      name: netconstructions-incongruesproxy_traefik
+      name: ${COMPOSE_PROJECT_NAME}_traefik
 
 services:
   portainer:
     env_file: .env
     image: portainer/portainer-ce:2.1.1-alpine
     labels:
-      - traefik.docker.network=netconstructions-incongruesproxy_traefik
+      - traefik.docker.network=${COMPOSE_PROJECT_NAME}_traefik
       - traefik.enable=true
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${SUBDOMAIN-portainer}.entrypoints=http
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${SUBDOMAIN-portainer}.rule=Host(`${SUBDOMAIN-portainer}.${DOMAIN-localhost}`)

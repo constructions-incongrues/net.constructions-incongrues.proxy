@@ -44,7 +44,7 @@ networks:
     internal: true
   traefik:
     external:
-      name: netconstructions-incongruesproxy_traefik
+      name: ${COMPOSE_PROJECT_NAME}_traefik
 ```
 
 - Associer les services qui doivent être accessible publiquement au réseau `traefik` :
@@ -56,7 +56,7 @@ services:
     image: nginx
     labels:
       - traefik.enable=true
-      - traefik.docker.network=traefik
+      - traefik.docker.network=${COMPOSE_PROJECT_NAME}_traefik
     networks:
       - default
       - traefik

@@ -39,4 +39,4 @@ network:
 		--driver=bridge \
 		--attachable \
 		--internal=false \
-	netconstructions-incongruesproxy_traefik
+	$${COMPOSE_PROJECT_NAME}_traefik

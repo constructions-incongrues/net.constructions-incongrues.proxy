@@ -3,7 +3,7 @@ version: '2.4'
 networks:
   default:
     external:
-      name: netconstructions-incongruesproxy_traefik
+      name: ${COMPOSE_PROJECT_NAME}_traefik
 
 services:
   traefik:
