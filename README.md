@@ -1,4 +1,4 @@
-# net.constructions-incongrues.proxy
+# net.pastis-hosting.docker
 
 ## Présentation
 
@@ -7,7 +7,7 @@ Ce projet permet de router du trafic vers des services exposés via de multiples
 ## Installation
 
 ```sh
-git clone git@github.com:constructions-incongrues/net.constructions-incongrues.proxy.git
+git clone git@github.com:constructions-incongrues/net.pastis-hosting.docker.git
 ```
 
 ## Services
