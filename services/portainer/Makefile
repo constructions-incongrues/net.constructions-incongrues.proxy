@@ -30,7 +30,7 @@ start: ## Démarrage
 stop: ## Arrêt
 	docker-compose stop
 
-## Opérations à distance
+## Helpers
 
-ssh:
+ssh: ## Connexion au serveur de production
 	ssh -A debian@152.228.130.67

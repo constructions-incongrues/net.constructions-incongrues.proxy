@@ -31,7 +31,13 @@ start: ## Démarrage
 stop: ## Arrêt
 	docker-compose stop
 
+## Helpers
+
+ssh: ## Connexion au serveur de production
+	ssh -A debian@152.228.130.67
+
 # Commandes privées
+
 network:
 	-docker network create \
 		--driver=bridge \
