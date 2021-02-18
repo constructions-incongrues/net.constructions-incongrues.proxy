@@ -9,6 +9,7 @@ services:
       - --log.level=${LOGLEVEL-INFO}
       - --providers.docker.exposedbydefault=false
       - --providers.docker=true
+    env_file: .env
     image: traefik:v2.4.3
     labels:
       - traefik.enable=true
