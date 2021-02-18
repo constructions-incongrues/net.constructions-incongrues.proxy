@@ -13,7 +13,7 @@ help: ## Affichage de ce message d'aide
 
 ## Commands
 
-clean: portainer-clean traefik-clean ## Arrêt et suppression des conteneurs
+clean: stop ## Arrêt et suppression des conteneurs
 
 start: traefik-start portainer-start  ## Démarrage des services
 
@@ -28,7 +28,7 @@ portainer-start:
 portainer-stop:
 	$(MAKE) -C services/portainer stop
 
-portainer-clean:
+portainer-clean: portainer-stop
 	$(MAKE) -C services/portainer clean
 
 ### traefik
@@ -38,7 +38,7 @@ traefik-start:
 traefik-stop:
 	$(MAKE) -C services/traefik stop
 
-traefik-clean:
+traefik-clean: traefik-stop
 	$(MAKE) -C services/traefik clean
 
 ## Helpers
