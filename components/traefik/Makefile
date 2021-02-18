@@ -11,7 +11,7 @@ export $(shell sed 's/=.*//' .env)
 ## Misc
 
 help: ## Affichage de ce message d'aide
-	@printf "\033[36m%s\033[0m\n\n" $$(basename $$(pwd))
+	@printf "\033[36m%s\033[0m \n\n" $$(basename $$(pwd))
 	@echo "Commandes\n"
 	@for MKFILE in $(MAKEFILE_LIST); do \
 		grep -E '^[a-zA-Z0-9\._-]+:.*?## .*$$' $$MKFILE | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m  %-30s\033[0m  %s\n", $$1, $$2}'; \
@@ -19,15 +19,16 @@ help: ## Affichage de ce message d'aide
 	@echo ""
 	@echo "Endpoints"
 	@echo
-	@echo "  \033[36mPortainer\033[0m : http://$$SERVICE.$$DOMAIN"
+	@echo "  \033[36mTraefik\033[0m : http://$${COMPONENT}.$${DOMAIN}"
 
 ## Contrôle des conteneurs
 
-clean: stop # Suppression des conteneurs
-	docker-compose -p $${COMPOSE_PROJECT_NAME}-$${SERVICE} rm -f
+clean: stop ## Suppresssion des conteneurs
+	docker-compose -p $${COMPOSE_PROJECT_NAME}-$${COMPONENT} rm -f
 
-start: ## Démarrage du service
-	docker-compose -p $${COMPOSE_PROJECT_NAME}-$${SERVICE} up --remove-orphans -d
+start: ## Démarrage du composant
+	docker-compose -p $${COMPOSE_PROJECT_NAME}-$${COMPONENT} up --remove-orphans -d
 
-stop: ## Arrêt du service
-	docker-compose -p $${COMPOSE_PROJECT_NAME}-$${SERVICE} stop
+stop: ## Arrêt arrêt du composant
+	docker-compose -p $${COMPOSE_PROJECT_NAME}-$${COMPONENT} stop
+

@@ -19,31 +19,31 @@ help: ## Affichage de ce message d'aide
 
 clean: stop ## Suppression des conteneurs
 
-start: traefik-start portainer-start  ## Démarrage des services
+start: traefik-start portainer-start  ## Démarrage des composants
 
-stop: portainer-stop traefik-stop ## Arrêt des services
+stop: portainer-stop traefik-stop ## Arrêt des composants
 
-## Services
+## Composants
 
 ### portainer
 portainer-start: network
-	$(MAKE) -C services/portainer start
+	$(MAKE) -C components/portainer start
 
 portainer-stop:
-	$(MAKE) -C services/portainer stop
+	$(MAKE) -C components/portainer stop
 
 portainer-clean: portainer-stop
-	$(MAKE) -C services/portainer clean
+	$(MAKE) -C components/portainer clean
 
 ### traefik
 traefik-start: network
-	$(MAKE) -C services/traefik start
+	$(MAKE) -C components/traefik start
 
 traefik-stop:
-	$(MAKE) -C services/traefik stop
+	$(MAKE) -C components/traefik stop
 
 traefik-clean: traefik-stop network-remove
-	$(MAKE) -C services/traefik clean
+	$(MAKE) -C components/traefik clean
 
 ## Network
 
