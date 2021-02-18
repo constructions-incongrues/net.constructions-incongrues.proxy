@@ -28,7 +28,7 @@ portainer-start:
 portainer-stop:
 	$(MAKE) -C services/portainer stop
 
-portainer-stop:
+portainer-clean:
 	$(MAKE) -C services/portainer clean
 
 ### traefik
