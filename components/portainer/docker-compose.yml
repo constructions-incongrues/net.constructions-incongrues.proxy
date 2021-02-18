@@ -3,7 +3,7 @@ version: '2.4'
 networks:
   default:
     internal: true
-  proxy:
+  public:
     external:
       name: ${COMPOSE_PROJECT_NAME}_public
 
@@ -19,7 +19,7 @@ services:
       - traefik.http.services.${COMPOSE_PROJECT_NAME}-${COMPONENT-portainer}.loadbalancer.server.port=9000
     networks:
       - default
-      - proxy
+      - public
     restart: always
     volumes:
       - portainer:/data

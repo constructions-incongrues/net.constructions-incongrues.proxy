@@ -1,0 +1,50 @@
+version: '2.4'
+
+networks:
+  default:
+    internal: true
+  public:
+    external:
+      name: ${COMPOSE_PROJECT_NAME}_public
+
+services:
+  statping:
+    depends_on:
+      - postgres
+    environment:
+      VIRTUAL_HOST: ${COMPONENT}.${DOMAIN}
+      DB_CONN: postgres
+      DB_HOST: postgres
+      DB_USER: statping
+      DB_PASS: statping
+      DB_DATABASE: statping
+      NAME: status.pastis-hosting.net
+      DESCRIPTION: État des services hébergés par Pastis Hosting
+    image: statping/statping:statping/statping:v0.90.74
+    labels:
+      - traefik.docker.network=${COMPOSE_PROJECT_NAME}_public
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${COMPONENT-status}.entrypoints=http
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${COMPONENT-status}.rule=Host(`${COMPONENT-status}.${DOMAIN-localhost}`)
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-${COMPONENT-status}.loadbalancer.server.port=9000
+    networks:
+      - default
+      - public
+    restart: always
+    volumes:
+      - statping:/app
+
+  postgres:
+    image: postgres:13.2
+    restart: always
+    networks:
+      - default
+    volumes:
+      - ./statping/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: statping
+      POSTGRES_USER: statping
+      POSTGRES_DB: statping
+
+volumes:
+  statping:

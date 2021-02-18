@@ -19,9 +19,9 @@ help: ## Affichage de ce message d'aide
 
 clean: stop ## Suppression des conteneurs
 
-start: traefik-start portainer-start  ## Démarrage des composants
+start: traefik-start portainer-start statping-start ## Démarrage des composants
 
-stop: portainer-stop traefik-stop ## Arrêt des composants
+stop: portainer-stop traefik-stop statping-stop ## Arrêt des composants
 
 ## Composants
 
@@ -34,6 +34,16 @@ portainer-stop:
 
 portainer-clean: portainer-stop
 	$(MAKE) -C components/portainer clean
+
+### statping
+statping-start: network
+	$(MAKE) -C components/statping start
+
+statping-stop:
+	$(MAKE) -C components/statping stop
+
+statping-clean: statping-stop
+	$(MAKE) -C components/statping clean
 
 ### traefik
 traefik-start: network
