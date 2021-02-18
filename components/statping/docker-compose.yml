@@ -20,7 +20,7 @@ services:
       DB_DATABASE: statping
       NAME: status.pastis-hosting.net
       DESCRIPTION: État des services hébergés par Pastis Hosting
-    image: statping/statping:statping/statping:v0.90.74
+    image: statping/statping:v0.90.74
     labels:
       - traefik.docker.network=${COMPOSE_PROJECT_NAME}_public
       - traefik.enable=true
