@@ -32,11 +32,6 @@ services:
   # pastis-hosting.net
 
   ## endpoints
-  - name: traefik.pastis-hosting.net
-    domain: https://traefik.pastis-hosting.net
-    permalink: traefik.pastis-hosting.net
-    <<: *httpsservice
-
   - name: mirror.pastis-hosting.net
     domain: https://mirror.pastis-hosting.net
     permalink: mirror.pastis-hosting.net
@@ -52,13 +47,18 @@ services:
     permalink: status.pastis-hosting.net
     <<: *httpsservice
 
-  - name: www.jean-cloude.club
-    domain: https://www.jean-cloude.club
-    permalink: www
+  - name: traefik.pastis-hosting.net
+    domain: https://traefik.pastis-hosting.net
+    permalink: traefik.pastis-hosting.net
+    <<: *httpsservice
+
+  - name: portainer.pastis-hosting.net
+    domain: https://portainer.pastis-hosting.net
+    permalink: portainer.pastis-hosting.net
     <<: *httpsservice
 
   ## services
   - name: postgres
-    domain: db
+    domain: postgres
     port: 5432
     <<: *tcpservice
