@@ -9,21 +9,20 @@ networks:
 
 services:
   portainer:
-    env_file: .env
+    env_file:
+      - .env
+      - ../../etc/${ENVIRONMENT-localhost}/.env
     image: portainer/portainer-ce:2.1.1-alpine
     labels:
       - traefik.docker.network=${COMPOSE_PROJECT_NAME}_public
       - traefik.enable=true
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${COMPONENT}.entrypoints=http
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${COMPONENT}.rule=Host(`${COMPONENT}.${DOMAIN}`)
-      - traefik.http.services.${COMPOSE_PROJECT_NAME}-${COMPONENT}.loadbalancer.server.port=9000
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-portainer.entrypoints=http
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-portainer.rule=${PORTAINER_TRAEFIK_RULE}
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-portainer.loadbalancer.server.port=9000
     networks:
       - default
       - public
     restart: always
     volumes:
-      - portainer:/data
+      - ../../var/portainer:/data
       - /var/run/docker.sock:/var/run/docker.sock
-
-volumes:
-  portainer:

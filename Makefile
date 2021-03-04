@@ -1,8 +1,11 @@
 #!/usr/bin/env make
 
+export ENVIRONMENT := localhost
+export COMPOSE_PROJECT_NAME := net-pastis-hosting-docker
+
 # Import de la configuration environnementale
--include .env
-export $(shell sed 's/=.*//' .env)
+include ./etc/$(ENVIRONMENT)/.env
+export $(shell sed 's/=.*//' ./etc/$(ENVIRONMENT)/.env)
 
 # Commandes publiques
 
@@ -19,6 +22,8 @@ help: ## Affichage de ce message d'aide
 
 clean: stop ## Suppression des conteneurs
 
+purge: clean ## Supression des volumes
+
 start: traefik-start portainer-start statping-start ## Démarrage des composants
 
 stop: portainer-stop traefik-stop statping-stop ## Arrêt des composants
@@ -27,33 +32,42 @@ stop: portainer-stop traefik-stop statping-stop ## Arrêt des composants
 
 ### portainer
 portainer-start: network
-	$(MAKE) -C components/portainer start
+	$(MAKE) -C src/portainer start
 
 portainer-stop:
-	$(MAKE) -C components/portainer stop
+	$(MAKE) -C src/portainer stop
 
 portainer-clean: portainer-stop
-	$(MAKE) -C components/portainer clean
+	$(MAKE) -C src/portainer clean
+
+portainer-purge: portainer-clean
+	$(MAKE) -C src/portainer purge
 
 ### statping
 statping-start: network
-	$(MAKE) -C components/statping start
+	$(MAKE) -C src/statping start
 
 statping-stop:
-	$(MAKE) -C components/statping stop
+	$(MAKE) -C src/statping stop
 
 statping-clean: statping-stop
-	$(MAKE) -C components/statping clean
+	$(MAKE) -C src/statping clean
+
+statping-purge: statping-clean
+	$(MAKE) -C src/statping purge
 
 ### traefik
 traefik-start: network
-	$(MAKE) -C components/traefik start
+	$(MAKE) -C src/traefik start
 
 traefik-stop:
-	$(MAKE) -C components/traefik stop
+	$(MAKE) -C src/traefik stop
 
 traefik-clean: traefik-stop network-remove
-	$(MAKE) -C components/traefik clean
+	$(MAKE) -C src/traefik clean
+
+traefik-purge: traefik-stop network-clean
+	$(MAKE) -C src/traefik purge
 
 ## Network
 
@@ -71,4 +85,3 @@ network-remove:
 
 ssh: ## Connexion au serveur de production
 	ssh -A debian@152.228.130.67
-

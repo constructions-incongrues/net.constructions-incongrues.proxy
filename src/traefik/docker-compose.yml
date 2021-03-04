@@ -11,18 +11,20 @@ services:
       - --api.dashboard=true
       - --api=true
       - --entrypoints.http.address=:80
-      - --log.level=${LOGLEVEL-INFO}
+      - --log.level=${TRAEFIK_LOGLEVEL}
       - --providers.docker.exposedbydefault=false
       - --providers.docker=true
-    env_file: .env
+    env_file:
+      - .env
+      - ../../etc/${ENVIRONMENT-localhost}/.env
     image: traefik:v2.4.3
     labels:
       - traefik.enable=true
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${COMPONENT}.entrypoints=http
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${COMPONENT}.rule=Host(`${COMPONENT}.${DOMAIN}`)
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-${COMPONENT}.service=api@internal
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-traefik.entrypoints=http
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-traefik.rule=${TRAEFIK_TRAEFIK_RULE}
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-traefik.service=api@internal
       - traefik.port=8080
     ports:
-    - ${EXPOSE-8080}:80
+    - ${TRAEFIK_EXPOSE}:80
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro

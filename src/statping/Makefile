@@ -1,9 +1,9 @@
 #!/usr/bin/env make
 
 # Import de la configuration environnementale
--include ../../.env
-export $(shell sed 's/=.*//' .env)
--include .env
+include ../../etc/$(ENVIRONMENT)/.env
+export $(shell sed 's/=.*//' ../../etc/$(ENVIRONMENT)/.env)
+include .env
 export $(shell sed 's/=.*//' .env)
 
 # Commandes publiques
@@ -19,15 +19,18 @@ help: ## Affichage de ce message d'aide
 	@echo ""
 	@echo "Endpoints"
 	@echo
-	@echo "  \033[36mStatping\033[0m : http://$${COMPONENT}.$$DOMAIN"
+	@echo "  \033[36mStatping\033[0m : http://$${STATPING_FQDN}"
 
 ## Contrôle des conteneurs
 
 clean: stop # Suppression des conteneurs
-	docker-compose -p $${COMPOSE_PROJECT_NAME}-$${COMPONENT} rm -f
+	docker-compose -p $${COMPOSE_PROJECT_NAME}-statping rm -f
+
+purge: ## Suppression des volumes
+	sudo rm -rf ../../var/statping
 
 start: ## Démarrage du service
-	docker-compose -p $${COMPOSE_PROJECT_NAME}-$${COMPONENT} up --remove-orphans -d
+	docker-compose -p $${COMPOSE_PROJECT_NAME}-statping up --remove-orphans -d
 
 stop: ## Arrêt du service
-	docker-compose -p $${COMPOSE_PROJECT_NAME}-$${COMPONENT} stop
+	docker-compose -p $${COMPOSE_PROJECT_NAME}-statping stop

@@ -1,0 +1,54 @@
+x-tcpservice: &tcpservice
+  allow_notifications: true
+  check_interval: 60
+  notify_after: 0
+  notify_all_changes: true
+  public: true
+  redirect: true
+  timeout: 15
+  type: tcp
+
+x-httpsservice: &httpsservice
+  allow_notifications: true
+  check_interval: 45
+  expected_status: 200
+  method: GET
+  notify_after: 2
+  notify_all_changes: true
+  port: 443
+  public: true
+  redirect: true
+  timeout: 10
+  type: http
+  verify_ssl: true
+
+x-httpservice: &httpservice
+  port: 80
+  verify_ssl: false
+  <<: *httpsservice
+
+services:
+
+  # localhost
+
+  ## endpoints
+  - name: status.localhost
+    domain: http://status
+    permalink: status.localhost
+    <<: *httpservice
+
+  - name: traefik.localhost
+    domain: http://traefik
+    permalink: traefik.localhost
+    <<: *httpservice
+
+  - name: portainer.localhost
+    domain: http://portainer
+    permalink: portainer.localhost
+    <<: *httpservice
+
+  ## services
+  - name: postgres
+    domain: postgres
+    port: 5432
+    <<: *tcpservice
