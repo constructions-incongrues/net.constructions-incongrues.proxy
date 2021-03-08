@@ -1,6 +1,6 @@
 #!/usr/bin/env make
 
-export ENVIRONMENT := localhost
+export ENVIRONMENT := pastis-hosting.net
 export COMPOSE_PROJECT_NAME := net-pastis-hosting-docker
 
 # Import de la configuration environnementale
