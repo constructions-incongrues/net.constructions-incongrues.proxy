@@ -24,9 +24,9 @@ clean: stop ## Suppression des conteneurs
 
 purge: clean ## Supression des volumes
 
-start: traefik-start portainer-start statping-start ## Démarrage des composants
+start: traefik-start portainer-start ## Démarrage des composants
 
-stop: portainer-stop traefik-stop statping-stop ## Arrêt des composants
+stop: portainer-stop traefik-stop ## Arrêt des composants
 
 ## Composants
 
@@ -42,19 +42,6 @@ portainer-clean: portainer-stop
 
 portainer-purge: portainer-clean
 	$(MAKE) -C src/portainer purge
-
-### statping
-statping-start: network
-	$(MAKE) -C src/statping start
-
-statping-stop:
-	$(MAKE) -C src/statping stop
-
-statping-clean: statping-stop
-	$(MAKE) -C src/statping clean
-
-statping-purge: statping-clean
-	$(MAKE) -C src/statping purge
 
 ### traefik
 traefik-start: network
@@ -80,8 +67,3 @@ network:
 
 network-remove:
 	docker network rm $${COMPOSE_PROJECT_NAME}_public
-
-## Remote
-
-ssh: ## Connexion au serveur de production
-	ssh -A debian@152.228.130.67
